@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Header from "./Header";
 import Player from "./Player";
@@ -28,7 +28,13 @@ const App = () => {
     },
   ]);
 
+  const [highScore, setHighScore] = useState();
   const nextPlayerId = useRef(5);
+
+  useEffect(() => {
+    const scores = players.map((player) => player.score);
+    setHighScore(Math.max(...scores));
+  }, [players]);
 
   const handleRemovePlayer = (id) => {
     setPlayers((prevPlayers) => prevPlayers.filter((p) => p.id !== id));
@@ -62,7 +68,7 @@ const App = () => {
 
   return (
     <div className="scoreboard">
-      <Header title="Scoreboard" players={players} />
+      <Header players={players} />
 
       {/* Players list */}
       {players.map((player) => (
@@ -73,6 +79,7 @@ const App = () => {
           key={player.id.toString()}
           removePlayer={handleRemovePlayer}
           changeScore={handleScoreChange}
+          isHighScore={player.score === highScore && highScore !== 0}
         />
       ))}
       <AddPlayerForm addPlayer={handleAddPlayer} />

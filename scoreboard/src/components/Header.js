@@ -1,8 +1,9 @@
-import React from "react";
-import Stats from "./Stats";
-import Stopwatch from "./Stopwatch";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-// destructure props within the funciton parameter
+import Stats from './Stats';
+import Stopwatch from './Stopwatch';
+
 const Header = ({ players, title }) => {
   return (
     <header>
@@ -11,6 +12,15 @@ const Header = ({ players, title }) => {
       <Stopwatch />
     </header>
   );
+}
+
+Header.propTypes = {
+  title: PropTypes.string,
+  players: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+Header.defaultProps = {
+  title: "Scoreboard"
 };
 
 export default Header;
