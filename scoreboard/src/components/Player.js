@@ -1,12 +1,18 @@
-import React from "react";
+import React, { memo } from "react";
 
 import Counter from "./Counter";
 
 const Player = (props) => {
   return (
     <div className="player">
+      {console.log(props.name + " rendered")}
       <span className="player-name">
-        <button className="remove-player" onClick={() => props.removePlayer(props.id)}>✖</button>
+        <button
+          className="remove-player"
+          onClick={() => props.removePlayer(props.id)}
+        >
+          ✖
+        </button>
         {props.name}
       </span>
 
@@ -17,6 +23,11 @@ const Player = (props) => {
       />
     </div>
   );
-}
+};
 
-export default Player;
+// prevents the component from re-rendering if the props are the same by using React.memo
+const playerPropsAreEqual = (prevProps, nextProps) => {
+  return prevProps.score === nextProps.score;
+};
+
+export default memo(Player, playerPropsAreEqual);

@@ -6,21 +6,18 @@ const Stopwatch = () => {
 
   //
   useEffect(() => {
-    console.log("running side effect");
     let id;
 
     // set the interval if the stopwatch is running
     if (isRunning) {
       id = setInterval(() => {
         setElapsedTime((prevTime) => prevTime + 1);
-        console.log("tick");
       }, 1000);
     }
 
     // cleanup function to clear the interval
     return () => {
       clearInterval(id);
-      console.log("clean up");
     };
   }, [isRunning]);
 
